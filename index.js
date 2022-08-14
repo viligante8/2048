@@ -42,7 +42,7 @@ const handleInput = async (event) => {
       break;
     default:
       setupInput();
-      break;
+      return;
   }
 
   grid.cells.forEach(cell => cell.mergeTiles());
