@@ -1,40 +1,60 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const gameGrid = document.querySelector('.grid');
-  const scoreValue = document.querySelector('#score');
-  const gridSize = 4;
-  let squares = [];
+import Grid from './Grid.js';
+import Tile from './Tile.js';
 
-    const setupGrid = () => {
-      for (let i = 0; i < gridSize ** 2; i++) {
-        const square = document.createElement('div');
-        square.classList.add('grid-item');
-        gameGrid.appendChild(square);
-        squares.push(square);
-      }
-    }
-    setupGrid();
+const gameBoard = document.getElementById('game-board');
 
-    const generateInitalNumbers = (amountOfNumbersToGenerate) => {
-      for (let i = 0; i < amountOfNumbersToGenerate; i++) {
-        const randomIndex = Math.floor(Math.random() * squares.length);
-        const randomStartingNumber = Math.random() > 0.5 ? 2 : 4;
-        squares[randomIndex].innerHTML = randomStartingNumber;
-      }
-    }
+const grid = new Grid(gameBoard);
 
-    generateInitalNumbers(2);
-});
 
-// add event arrow keys to move the tiles
-document.addEventListener('keydown', (event) => {
-  const key = event.keyCode;
-  const direction = key === 37 ? 'left' : key === 38 ? 'up' : key === 39 ? 'right' : key === 40 ? 'down' : null;
-  if (direction) {
-    moveTiles(direction);
+grid.randomEmptyCell().tile = new Tile(gameBoard);
+grid.randomEmptyCell().tile = new Tile(gameBoard);
+
+const handleInput = (event) => {
+  const key = event.key;
+  console.log(key);
+  switch(key) {
+    case 'ArrowLeft':
+      moveLeft();
+      break;
+    case 'ArrowUp':
+      moveUp();
+      break;
+    case 'ArrowRight':
+      moveRight();
+      break;
+    case 'ArrowDown':
+      moveDown();
+      break;
+    default:
+      setupInput();
+      break;
   }
-});
+  setupInput();
+}
 
-const moveTiles = (direction) => {
+const setupInput = () => {
+  window.addEventListener('keydown', handleInput, { once: true });
+}
+
+setupInput();
+
+const moveUp = () => {
+  return slideTiles(grid.cellsByColumn)
+}
+
+const moveDown= () => {
+  return slideTiles(grid.cellsByColumn)
+}
+
+const moveLeft = () => {
+  return slideTiles(grid.cellsByRow)
+}
+
+const moveRight = () => {
+  return slideTiles(grid.cellsByRow)
+}
+
+const slideTiles = (cells) => {
   
 }
 
